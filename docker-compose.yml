@@ -1,0 +1,15 @@
+version: "3.7"
+services:
+  db:
+    image: mongo:latest
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - "db"
+    volumes:
+      - ./web/vision:/app:rw
+    stdin_open: true
