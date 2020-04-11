@@ -15,7 +15,10 @@ class Repository extends Component {
                     <pre>{this.props.data}</pre>
                 </div>
             );}
-        else
+        else {
+            let end = new Date();
+            let begin = new Date();
+            begin.setFullYear(end.getFullYear() - 1);
             return (
                 <React.Fragment>
                     <span><br></br>{this.props.data.owner.login}/{this.props.data.name}<br></br> </span>
@@ -23,8 +26,8 @@ class Repository extends Component {
                     <h1>Commits</h1>
                      <ResponsiveCalendar
                         data={this.props.calendarData}
-                        from="2019-04-10"
-                        to={new Date().toISOString().slice(0, 10)}
+                        from={begin.toISOString().slice(0, 10)}
+                        to={end.toISOString().slice(0, 10)}
                         emptyColor="#eeeeee"
                         colors={[ '#4791db', '#1976d2', '#115293', '#dc004e' ]}
                         margin={{ top: 40, right: 40, bottom: 40, left: 40 }}
@@ -45,13 +48,13 @@ class Repository extends Component {
                             }
                         ]}
                     />
-                    {/*<h1>Issues</h1>
+                    {/* <h1>Issues</h1>
                     <ResponsiveCalendar
-                        data={this.data}
-                        from="2019-04-10"
-                        to={new Date().toISOString().slice(0, 10)}
+                        data={this.props.calendarData}
+                        from={begin.toISOString().slice(0, 10)}
+                        to={end.toISOString().slice(0, 10)}
                         emptyColor="#eeeeee"
-                        colors={[ '#4791db', '#1976d2', '#115293', '#dc004e' ]}
+                        colors={['#61cdbb', '#97e3d5', '#e8c1a0', '#f47560']}
                         margin={{ top: 40, right: 40, bottom: 40, left: 40 }}
                         yearSpacing={40}
                         monthBorderColor="#ffffff"
@@ -71,7 +74,7 @@ class Repository extends Component {
                         ]}
                     /> */}
                 </React.Fragment>
-            );
+            );}
     }
 }
 
