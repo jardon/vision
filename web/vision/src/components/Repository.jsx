@@ -3,13 +3,9 @@ import { ResponsiveCalendar } from '@nivo/calendar'
 
 class Repository extends Component {
 
-    date = new Date(1574553600 * 1000);
-    date2 = new Date(1574553600 * 1000);
-
     render() { 
 
         if (this.props.data == "No data loaded") {
-            this.date2.setDate(this.date2.getDate() + 1);
             return (  
                 <div>
                     <pre>{this.props.data}</pre>
