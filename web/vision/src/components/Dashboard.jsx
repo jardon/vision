@@ -45,18 +45,3 @@ class Dashboard extends Component {
 }
  
 export default Dashboard;
-
-// class Parent extends Component{
-//     parentFunction=(data_from_child)=>{
-//         console.log(data_from_child);
-//     }
-    
-//     render(){
-//         return(
-//             <div>      
-//                 <Child1 functionCallFromParent={this.parentFunction.bind(this)}/>
-//             </div>
-//         );
-//     }
-// }
-// export default Parent;
