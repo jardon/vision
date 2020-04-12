@@ -41,7 +41,7 @@ sudo systemctl start docker
 ```
 #### Clone Repository
 ```bash
-git clone https://gitlab.com/jardon/toppel.git /path/to/desired/destination
+git clone https://gitlab.com/jardon/vision.git /path/to/desired/destination
 ```
 **__NOTE:__** You can omit the path if you want to clone it to the current directory
 
