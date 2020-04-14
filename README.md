@@ -69,3 +69,4 @@ docker stop $(docker ps -a -q)
 docker system prune -af
 docker-compose up
 ```
+**__NOTE:__** You may need to delete the web/vision/node_modules directory if the project fails to build
