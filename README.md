@@ -45,6 +45,10 @@ git clone https://gitlab.com/jardon/vision.git /path/to/desired/destination
 ```
 **__NOTE:__** You can omit the path if you want to clone it to the current directory
 
+### Add Github Personal Acces Token
+Create a Github personal access token following this [guide](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line).
+Create a file called `.env` in the folder `./web/vision` and add your personal access token in the format `REACT_APP_GITHUB_TOKEN=<personal access token>`.
+
 ### Run Instance
 ```bash
 cd /path/to/cloned/repo

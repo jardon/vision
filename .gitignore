@@ -1,2 +1,3 @@
 web/vision/node_modules
 .vagrant
+web/vision/.env
