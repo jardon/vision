@@ -22,17 +22,17 @@ class Dashboard extends Component {
         let issueData = [];
         let commits = await axios.get('https://api.github.com/repos/' + this.state.input + "/stats/commit_activity", auth);
         let date;
-        
-        for(let i = 0; i < commits.data.length; i++) {
-            if (commits.data[i].total !== 0) {
-                date = new Date(commits.data[i].week * 1000)
-                for(let j = 0; j < 7; j++) {
+
+        commits.data.map((item) => {
+            if (item.total !== 0) {
+                date = new Date(item.week * 1000)
+                item.days.map((day) => { 
                     date.setDate(date.getDate() + 1);
-                    if(commits.data[i].days[j] !== 0) 
-                        commitData.push({"day": date.toISOString().slice(0, 10), "value": commits.data[i].days[j]})
-                }
+                    if(day !== 0) 
+                        commitData.push({"day": date.toISOString().slice(0, 10), "value": day});
+                });
             }
-        }
+        });
 
         this.setState({data: "Data loaded", commitData: commitData});
 
@@ -53,18 +53,18 @@ class Dashboard extends Component {
         tempIssues = [];
         tempIssues = totalIssues.map((issue) => new Date(issue.updated_at).toISOString().slice(0, 10));
 
-        issueData = tempIssues.map((item) => {
+        tempIssues.map((item) => {
             let count = 0;
             let curr = item;
-            for(let i = 0; i < tempIssues.length; i++) {
-                if(tempIssues[i] === item){
+            tempIssues.map((date) => {
+                if(date === item) {
                     count++;
-                    tempIssues[i] = null;
+                    date = null;
                 }
-            }
-            if(curr !== null)
-                return {"day": curr, "value": count};
-        }).filter((item) => item != null);
+            });
+                if(curr != null)
+                    issueData.push({"day": curr, "value": count});
+        });        
         
         console.log("Done loading data");
         this.setState({issueData : issueData});
