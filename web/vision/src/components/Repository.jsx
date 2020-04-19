@@ -42,9 +42,9 @@ class Repository extends Component {
                             }
                         ]}
                     />
-                    {this.props.issueData != null && <React.Fragment>
-                        <h1>Issues</h1>
-                        <ResponsiveCalendar
+                    <h1>Issues</h1>
+                    {this.props.issueData === null && <h3>Issue Data Loading...</h3>}
+                    {this.props.issueData != null && <ResponsiveCalendar
                             data={this.props.issueData}
                             from={begin.toISOString().slice(0, 10)}
                             to={end.toISOString().slice(0, 10)}
@@ -67,8 +67,7 @@ class Repository extends Component {
                                     itemDirection: 'right-to-left'
                                 }
                             ]}
-                        />
-                    </React.Fragment>}
+                        />}
                 </React.Fragment>
             );
         }
