@@ -13,7 +13,8 @@
     "@material-ui/icons": "^4.9.1",
     "typeface-roboto": "^0.0.75",
     "axios": "0.19.2",
-    "@nivo/calendar": "0.61.1"
+    "@nivo/calendar": "0.61.1",
+    "three-dots": "0.2.0"
   },
   "scripts": {
     "start": "react-scripts start",

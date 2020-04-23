@@ -2,26 +2,41 @@ import React, { Component } from 'react';
 import Repository from './Repository'
 import Search from './Search'
 import axios from 'axios';
-import Box from '@material-ui/core/Box';
+// import Box from '@material-ui/core/Box';
+import Paper from '@material-ui/core/Paper';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+
 
 class Dashboard extends Component {
     state = { 
-        data: "No data loaded",
+        loaded: false,
         input: "",
         commitData: [],
         issueData: null,
-     }
+        repoUrl: null,
+        begin: null,
+        end: null,
+    }
 
-    updateInput = (field) => this.setState({input: field});
+    updateInput = input => this.setState({input});
 
     getData = async () => {
-        this.setState({ issueData: null, data: "No data loaded", commitData: [] });
+        this.setState({ issueData: null, loaded: false, commitData: [], repoUrl: null, begin: null, end: null });
         const API_KEY = process.env.REACT_APP_GITHUB_TOKEN;
         let auth = {headers: {authorization: "token " + API_KEY}}
         let commitData = [];
         let issueData = [];
-        let commits = await axios.get('https://api.github.com/repos/' + this.state.input + "/stats/commit_activity", auth);
         let date;
+        let end = new Date();
+        let begin = new Date();
+        begin.setFullYear(end.getFullYear() - 1);
+
+
+        let repoData = await axios.get('https://api.github.com/repos/' + this.state.input, auth);
+
+        let commits = await axios.get('https://api.github.com/repos/' + this.state.input + "/stats/commit_activity", auth);
 
         commits.data.map((item) => {
             if (item.total !== 0) {
@@ -34,7 +49,7 @@ class Dashboard extends Component {
             }
         });
 
-        this.setState({data: "Data loaded", commitData: commitData});
+        this.setState({loaded: true, commitData, repoUrl: repoData.data.html_url, begin, end});
 
         date = new Date();
         date.setFullYear(date.getFullYear() - 1);
@@ -67,18 +82,23 @@ class Dashboard extends Component {
         });        
         
         console.log("Done loading data");
-        this.setState({issueData : issueData});
+        this.setState({issueData});
 
     };
 
     render() { 
         return ( 
-            <div style={{"height" : "1200px"}}>
-                <Box height="100%" width="100%">
-                    <Search  search={this.getData.bind(this)} updateInput={this.updateInput.bind(this)}/>
-                    <Repository data={this.state.data} commitData={this.state.commitData} issueData={this.state.issueData}/>
-                </Box>
-            </div>
+            <React.Fragment>
+                <AppBar position="static">
+                    <Toolbar>
+                        <Typography variant="h6">
+                        Vision
+                        </Typography>
+                        <Search  search={this.getData.bind(this)} updateInput={this.updateInput.bind(this)}/>                      
+                    </Toolbar>
+                </AppBar>
+                <Repository state={this.state} style={{ minHeight: 30, padding: 20, marginTop: 10, marginBottom: 10, marginRight: 10, marginLeft: 10, height: "100%"}}/>
+            </React.Fragment>
          );
     }
 }
