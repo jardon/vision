@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Repository from './Repository'
+import RepositoryInfo from './RepositoryInfo';
 import Search from './Search'
 import axios from 'axios';
 // import Box from '@material-ui/core/Box';
@@ -7,6 +7,20 @@ import Paper from '@material-ui/core/Paper';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import NoRepository from './NoRepository';
+import Contributors from './Contributors';
+import Commits from './Commits';
+import Issues from './Issues';
+
+const style = {
+    minHeight: 30, 
+    padding: 20, 
+    marginTop: 10, 
+    marginBottom: 10, 
+    marginRight: 10, 
+    marginLeft: 10, 
+    height: "100%"
+}
 
 
 class Dashboard extends Component {
@@ -18,6 +32,13 @@ class Dashboard extends Component {
         repoUrl: null,
         begin: null,
         end: null,
+        
+        info: {
+            name: "repoName",
+            owner: "ownerName",
+            forked: "forkedAddress",
+            contributors: "numberOfContributors"
+        }
     }
 
     updateInput = input => this.setState({input});
@@ -97,7 +118,16 @@ class Dashboard extends Component {
                         <Search  search={this.getData.bind(this)} updateInput={this.updateInput.bind(this)}/>                      
                     </Toolbar>
                 </AppBar>
-                <Repository state={this.state} style={{ minHeight: 30, padding: 20, marginTop: 10, marginBottom: 10, marginRight: 10, marginLeft: 10, height: "100%"}}/>
+                
+                {!this.state.loaded && <NoRepository></NoRepository>}
+
+                {this.state.loaded && 
+                <React.Fragment>
+                    <RepositoryInfo state={this.state} style={style}></RepositoryInfo>
+                    <Contributors state={this.state} style={style}></Contributors>
+                    <Commits state={this.state} style={style}></Commits>
+                    <Issues state={this.state} style={style}></Issues>
+                </React.Fragment>}
             </React.Fragment>
          );
     }
