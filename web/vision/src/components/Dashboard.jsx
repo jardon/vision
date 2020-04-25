@@ -36,29 +36,20 @@ class Dashboard extends Component {
         info: {
             name: "repoName",
             owner: "ownerName",
-            forked: "forkedAddress",
-            contributors: "numberOfContributors"
+            stars: 0,
+            watchers: 0,
+            forks: 0
         }
     }
 
     updateInput = input => this.setState({input});
 
-    getData = async () => {
-        this.setState({ issueData: null, loaded: false, commitData: [], repoUrl: null, begin: null, end: null });
-        const API_KEY = process.env.REACT_APP_GITHUB_TOKEN;
-        let auth = {headers: {authorization: "token " + API_KEY}}
-        let commitData = [];
-        let issueData = [];
+    getCommitGraphData = async () => {
         let date;
-        let end = new Date();
-        let begin = new Date();
-        begin.setFullYear(end.getFullYear() - 1);
-
-
-        let repoData = await axios.get('https://api.github.com/repos/' + this.state.input, auth);
-
+        let commitData = [];
+        const API_KEY = process.env.REACT_APP_GITHUB_TOKEN;
+        let auth = {headers: {authorization: "token " + API_KEY}};
         let commits = await axios.get('https://api.github.com/repos/' + this.state.input + "/stats/commit_activity", auth);
-
         commits.data.map((item) => {
             if (item.total !== 0) {
                 date = new Date(item.week * 1000)
@@ -70,9 +61,14 @@ class Dashboard extends Component {
             }
         });
 
-        this.setState({loaded: true, commitData, repoUrl: repoData.data.html_url, begin, end});
+        this.setState({ commitData });
+    }
 
-        date = new Date();
+    getIssueGraphData = async () => {
+        let issueData = [];
+        const API_KEY = process.env.REACT_APP_GITHUB_TOKEN;
+        let auth = {headers: {authorization: "token " + API_KEY}};
+        let date = new Date();
         date.setFullYear(date.getFullYear() - 1);
         let issues = await axios.get('https://api.github.com/repos/' + this.state.input + '/issues?since=' + date.toISOString() + '&per_page=100', auth);
 
@@ -102,8 +98,42 @@ class Dashboard extends Component {
                     issueData.push({"day": curr, "value": count});
         });        
         
-        console.log("Done loading data");
         this.setState({issueData});
+    }
+
+    getContributorGraphData = async () => {
+        const API_KEY = process.env.REACT_APP_GITHUB_TOKEN;
+        let auth = {headers: {authorization: "token " + API_KEY}};
+        // let contributors = await axios.get(repoData.data.contributors_url, auth);
+    }
+
+    getData = async () => {
+        this.setState({ issueData: null, loaded: false, commitData: [], repoUrl: null, begin: null, end: null });
+        const API_KEY = process.env.REACT_APP_GITHUB_TOKEN;
+        let auth = {headers: {authorization: "token " + API_KEY}}
+        let end = new Date();
+        let begin = new Date();
+        begin.setFullYear(end.getFullYear() - 1);
+
+
+        let repoData = await axios.get('https://api.github.com/repos/' + this.state.input, auth);
+
+
+        this.getCommitGraphData()
+
+        this.setState({loaded: true, repoUrl: repoData.data.html_url, begin, end, 
+            info: { 
+                    name: repoData.data.name,
+                    owner: repoData.data.owner.login,
+                    forked: repoData.data.fork,
+                    stars: repoData.data.watchers,
+                    watchers: repoData.data.subscribers_count,
+                    forks: repoData.data.forks
+            }
+        });
+
+        this.getContributorGraphData();
+        this.getIssueGraphData();
 
     };
 
@@ -124,8 +154,8 @@ class Dashboard extends Component {
                 {this.state.loaded && 
                 <React.Fragment>
                     <RepositoryInfo state={this.state} style={style}></RepositoryInfo>
-                    <Contributors state={this.state} style={style}></Contributors>
                     <Commits state={this.state} style={style}></Commits>
+                    <Contributors state={this.state} style={style}></Contributors>
                     <Issues state={this.state} style={style}></Issues>
                 </React.Fragment>}
             </React.Fragment>
