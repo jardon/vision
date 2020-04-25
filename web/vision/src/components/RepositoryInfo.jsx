@@ -7,7 +7,7 @@ class RepositoryInfo extends Component {
 
     render() { 
         const { repoUrl } = this.props.state;
-        const { name, owner, forked, contributors } = this.props.state.info;
+        const { name, owner, forked, contributors, stars, watchers, forks } = this.props.state.info;
 
         return ( 
             <Paper elevation={3} style={this.props.style}>
@@ -15,8 +15,9 @@ class RepositoryInfo extends Component {
                 <div style={{marginTop: 20, marginBottom: 20}}>
                     <Typography variant="body1">Name: {name}</Typography>
         <Typography variant="body1">Owner: {owner}</Typography>
-                    <Typography variant="body1">Forked from: {forked}</Typography>
-                    <Typography variant="body1">Contributors: {contributors}</Typography>
+                    <Typography variant="body1">Stars: {stars.toLocaleString(undefined, { minimumFractionDigits: 0 })}</Typography>
+                    <Typography variant="body1">Watchers: {watchers.toLocaleString(undefined, { minimumFractionDigits: 0 })}</Typography>
+                    <Typography variant="body1">Forks: {forks.toLocaleString(undefined, { minimumFractionDigits: 0 })}</Typography>
                 </div>
                 <Divider light />
                 {repoUrl != null && 
