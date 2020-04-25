@@ -24,7 +24,7 @@ class RepositoryInfo extends Component {
                     <div style={{marginTop: 20, width: 130, marginLeft: "auto", marginRight: "auto"}}>
                         <a href={repoUrl} target="_blank" rel="noopener noreferrer" style={{ color: "black", textDecoration: "none"}}>
                             <span >View on Github  </span>
-                            <img src="media/GitHub-Mark.png"></img>
+                            {/* <img src="media/GitHub-Mark.png"></img> */}
                         </a>
                     </div>}
             </Paper>
