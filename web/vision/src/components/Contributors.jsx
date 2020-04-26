@@ -2,426 +2,429 @@ import React, { Component } from 'react';
 import { Typography } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import { ResponsiveTreeMap } from '@nivo/treemap';
+import CircularProgress from './Spinner';
 
 class Contributors extends Component {
     
-    render() { 
+    render() {
 
-        let root = {
-            "root": {
-              "name": "nivo",
-              "color": "hsl(237, 70%, 50%)",
+      const { contributionData } = this.props.state;
+
+      console.log(contributionData);
+
+      let root = {
+        "root": {
+          "name": "nivo",
+          "color": "hsl(4, 70%, 50%)",
+          "children": [
+            {
+              "name": "viz",
+              "color": "hsl(63, 70%, 50%)",
               "children": [
                 {
-                  "name": "viz",
-                  "color": "hsl(136, 70%, 50%)",
+                  "name": "stack",
+                  "color": "hsl(126, 70%, 50%)",
                   "children": [
                     {
-                      "name": "stack",
-                      "color": "hsl(131, 70%, 50%)",
-                      "children": [
-                        {
-                          "name": "chart",
-                          "color": "hsl(39, 70%, 50%)",
-                          "loc": 82648
-                        },
-                        {
-                          "name": "xAxis",
-                          "color": "hsl(180, 70%, 50%)",
-                          "loc": 163215
-                        },
-                        {
-                          "name": "yAxis",
-                          "color": "hsl(3, 70%, 50%)",
-                          "loc": 31409
-                        },
-                        {
-                          "name": "layers",
-                          "color": "hsl(165, 70%, 50%)",
-                          "loc": 149214
-                        }
-                      ]
+                      "name": "chart",
+                      "color": "hsl(306, 70%, 50%)",
+                      "loc": 28247
                     },
                     {
-                      "name": "pie",
-                      "color": "hsl(59, 70%, 50%)",
+                      "name": "xAxis",
+                      "color": "hsl(142, 70%, 50%)",
+                      "loc": 22335
+                    },
+                    {
+                      "name": "yAxis",
+                      "color": "hsl(328, 70%, 50%)",
+                      "loc": 160732
+                    },
+                    {
+                      "name": "layers",
+                      "color": "hsl(65, 70%, 50%)",
+                      "loc": 71581
+                    }
+                  ]
+                },
+                {
+                  "name": "pie",
+                  "color": "hsl(240, 70%, 50%)",
+                  "children": [
+                    {
+                      "name": "chart",
+                      "color": "hsl(2, 70%, 50%)",
                       "children": [
                         {
-                          "name": "chart",
-                          "color": "hsl(355, 70%, 50%)",
+                          "name": "pie",
+                          "color": "hsl(7, 70%, 50%)",
                           "children": [
                             {
-                              "name": "pie",
-                              "color": "hsl(225, 70%, 50%)",
-                              "children": [
-                                {
-                                  "name": "outline",
-                                  "color": "hsl(34, 70%, 50%)",
-                                  "loc": 78336
-                                },
-                                {
-                                  "name": "slices",
-                                  "color": "hsl(53, 70%, 50%)",
-                                  "loc": 3743
-                                },
-                                {
-                                  "name": "bbox",
-                                  "color": "hsl(1, 70%, 50%)",
-                                  "loc": 13340
-                                }
-                              ]
-                            },
-                            {
-                              "name": "donut",
-                              "color": "hsl(73, 70%, 50%)",
-                              "loc": 133680
-                            },
-                            {
-                              "name": "gauge",
-                              "color": "hsl(201, 70%, 50%)",
-                              "loc": 130450
-                            }
-                          ]
-                        },
-                        {
-                          "name": "legends",
-                          "color": "hsl(268, 70%, 50%)",
-                          "loc": 99963
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "name": "colors",
-                  "color": "hsl(92, 70%, 50%)",
-                  "children": [
-                    {
-                      "name": "rgb",
-                      "color": "hsl(121, 70%, 50%)",
-                      "loc": 189803
-                    },
-                    {
-                      "name": "hsl",
-                      "color": "hsl(290, 70%, 50%)",
-                      "loc": 189315
-                    }
-                  ]
-                },
-                {
-                  "name": "utils",
-                  "color": "hsl(121, 70%, 50%)",
-                  "children": [
-                    {
-                      "name": "randomize",
-                      "color": "hsl(266, 70%, 50%)",
-                      "loc": 155458
-                    },
-                    {
-                      "name": "resetClock",
-                      "color": "hsl(216, 70%, 50%)",
-                      "loc": 167882
-                    },
-                    {
-                      "name": "noop",
-                      "color": "hsl(203, 70%, 50%)",
-                      "loc": 112607
-                    },
-                    {
-                      "name": "tick",
-                      "color": "hsl(171, 70%, 50%)",
-                      "loc": 87543
-                    },
-                    {
-                      "name": "forceGC",
-                      "color": "hsl(237, 70%, 50%)",
-                      "loc": 166475
-                    },
-                    {
-                      "name": "stackTrace",
-                      "color": "hsl(228, 70%, 50%)",
-                      "loc": 23230
-                    },
-                    {
-                      "name": "dbg",
-                      "color": "hsl(252, 70%, 50%)",
-                      "loc": 119919
-                    }
-                  ]
-                },
-                {
-                  "name": "generators",
-                  "color": "hsl(71, 70%, 50%)",
-                  "children": [
-                    {
-                      "name": "address",
-                      "color": "hsl(100, 70%, 50%)",
-                      "loc": 26596
-                    },
-                    {
-                      "name": "city",
-                      "color": "hsl(12, 70%, 50%)",
-                      "loc": 16734
-                    },
-                    {
-                      "name": "animal",
-                      "color": "hsl(155, 70%, 50%)",
-                      "loc": 175631
-                    },
-                    {
-                      "name": "movie",
-                      "color": "hsl(314, 70%, 50%)",
-                      "loc": 75785
-                    },
-                    {
-                      "name": "user",
-                      "color": "hsl(114, 70%, 50%)",
-                      "loc": 193957
-                    }
-                  ]
-                },
-                {
-                  "name": "set",
-                  "color": "hsl(303, 70%, 50%)",
-                  "children": [
-                    {
-                      "name": "clone",
-                      "color": "hsl(271, 70%, 50%)",
-                      "loc": 111852
-                    },
-                    {
-                      "name": "intersect",
-                      "color": "hsl(307, 70%, 50%)",
-                      "loc": 119836
-                    },
-                    {
-                      "name": "merge",
-                      "color": "hsl(102, 70%, 50%)",
-                      "loc": 27399
-                    },
-                    {
-                      "name": "reverse",
-                      "color": "hsl(202, 70%, 50%)",
-                      "loc": 166046
-                    },
-                    {
-                      "name": "toArray",
-                      "color": "hsl(205, 70%, 50%)",
-                      "loc": 24418
-                    },
-                    {
-                      "name": "toObject",
-                      "color": "hsl(103, 70%, 50%)",
-                      "loc": 175111
-                    },
-                    {
-                      "name": "fromCSV",
-                      "color": "hsl(92, 70%, 50%)",
-                      "loc": 173104
-                    },
-                    {
-                      "name": "slice",
-                      "color": "hsl(151, 70%, 50%)",
-                      "loc": 56956
-                    },
-                    {
-                      "name": "append",
-                      "color": "hsl(102, 70%, 50%)",
-                      "loc": 88091
-                    },
-                    {
-                      "name": "prepend",
-                      "color": "hsl(83, 70%, 50%)",
-                      "loc": 61961
-                    },
-                    {
-                      "name": "shuffle",
-                      "color": "hsl(113, 70%, 50%)",
-                      "loc": 170264
-                    },
-                    {
-                      "name": "pick",
-                      "color": "hsl(228, 70%, 50%)",
-                      "loc": 197568
-                    },
-                    {
-                      "name": "plouc",
-                      "color": "hsl(70, 70%, 50%)",
-                      "loc": 21093
-                    }
-                  ]
-                },
-                {
-                  "name": "text",
-                  "color": "hsl(291, 70%, 50%)",
-                  "children": [
-                    {
-                      "name": "trim",
-                      "color": "hsl(324, 70%, 50%)",
-                      "loc": 74988
-                    },
-                    {
-                      "name": "slugify",
-                      "color": "hsl(229, 70%, 50%)",
-                      "loc": 138215
-                    },
-                    {
-                      "name": "snakeCase",
-                      "color": "hsl(345, 70%, 50%)",
-                      "loc": 112522
-                    },
-                    {
-                      "name": "camelCase",
-                      "color": "hsl(108, 70%, 50%)",
-                      "loc": 69421
-                    },
-                    {
-                      "name": "repeat",
-                      "color": "hsl(61, 70%, 50%)",
-                      "loc": 196574
-                    },
-                    {
-                      "name": "padLeft",
-                      "color": "hsl(352, 70%, 50%)",
-                      "loc": 53341
-                    },
-                    {
-                      "name": "padRight",
-                      "color": "hsl(321, 70%, 50%)",
-                      "loc": 11027
-                    },
-                    {
-                      "name": "sanitize",
-                      "color": "hsl(348, 70%, 50%)",
-                      "loc": 23790
-                    },
-                    {
-                      "name": "ploucify",
-                      "color": "hsl(272, 70%, 50%)",
-                      "loc": 59647
-                    }
-                  ]
-                },
-                {
-                  "name": "misc",
-                  "color": "hsl(90, 70%, 50%)",
-                  "children": [
-                    {
-                      "name": "whatever",
-                      "color": "hsl(19, 70%, 50%)",
-                      "children": [
-                        {
-                          "name": "hey",
-                          "color": "hsl(273, 70%, 50%)",
-                          "loc": 165364
-                        },
-                        {
-                          "name": "WTF",
-                          "color": "hsl(26, 70%, 50%)",
-                          "loc": 168633
-                        },
-                        {
-                          "name": "lol",
-                          "color": "hsl(27, 70%, 50%)",
-                          "loc": 198337
-                        },
-                        {
-                          "name": "IMHO",
-                          "color": "hsl(168, 70%, 50%)",
-                          "loc": 180792
-                        }
-                      ]
-                    },
-                    {
-                      "name": "other",
-                      "color": "hsl(23, 70%, 50%)",
-                      "loc": 143466
-                    },
-                    {
-                      "name": "crap",
-                      "color": "hsl(267, 70%, 50%)",
-                      "children": [
-                        {
-                          "name": "crapA",
-                          "color": "hsl(13, 70%, 50%)",
-                          "loc": 31726
-                        },
-                        {
-                          "name": "crapB",
-                          "color": "hsl(69, 70%, 50%)",
-                          "children": [
-                            {
-                              "name": "crapB1",
-                              "color": "hsl(328, 70%, 50%)",
-                              "loc": 125712
-                            },
-                            {
-                              "name": "crapB2",
-                              "color": "hsl(136, 70%, 50%)",
-                              "loc": 2401
-                            },
-                            {
-                              "name": "crapB3",
-                              "color": "hsl(37, 70%, 50%)",
-                              "loc": 100915
-                            },
-                            {
-                              "name": "crapB4",
-                              "color": "hsl(3, 70%, 50%)",
-                              "loc": 94682
-                            }
-                          ]
-                        },
-                        {
-                          "name": "crapC",
-                          "color": "hsl(333, 70%, 50%)",
-                          "children": [
-                            {
-                              "name": "crapC1",
-                              "color": "hsl(122, 70%, 50%)",
-                              "loc": 149028
-                            },
-                            {
-                              "name": "crapC2",
-                              "color": "hsl(44, 70%, 50%)",
-                              "loc": 145885
-                            },
-                            {
-                              "name": "crapC3",
-                              "color": "hsl(86, 70%, 50%)",
-                              "loc": 61279
-                            },
-                            {
-                              "name": "crapC4",
-                              "color": "hsl(354, 70%, 50%)",
-                              "loc": 137905
-                            },
-                            {
-                              "name": "crapC5",
+                              "name": "outline",
                               "color": "hsl(227, 70%, 50%)",
-                              "loc": 93027
+                              "loc": 130597
                             },
                             {
-                              "name": "crapC6",
-                              "color": "hsl(238, 70%, 50%)",
-                              "loc": 134632
+                              "name": "slices",
+                              "color": "hsl(257, 70%, 50%)",
+                              "loc": 172860
                             },
                             {
-                              "name": "crapC7",
-                              "color": "hsl(273, 70%, 50%)",
-                              "loc": 93320
-                            },
-                            {
-                              "name": "crapC8",
-                              "color": "hsl(355, 70%, 50%)",
-                              "loc": 44851
-                            },
-                            {
-                              "name": "crapC9",
-                              "color": "hsl(281, 70%, 50%)",
-                              "loc": 116536
+                              "name": "bbox",
+                              "color": "hsl(329, 70%, 50%)",
+                              "loc": 115843
                             }
                           ]
+                        },
+                        {
+                          "name": "donut",
+                          "color": "hsl(268, 70%, 50%)",
+                          "loc": 110748
+                        },
+                        {
+                          "name": "gauge",
+                          "color": "hsl(101, 70%, 50%)",
+                          "loc": 65775
+                        }
+                      ]
+                    },
+                    {
+                      "name": "legends",
+                      "color": "hsl(283, 70%, 50%)",
+                      "loc": 18025
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "colors",
+              "color": "hsl(240, 70%, 50%)",
+              "children": [
+                {
+                  "name": "rgb",
+                  "color": "hsl(45, 70%, 50%)",
+                  "loc": 158034
+                },
+                {
+                  "name": "hsl",
+                  "color": "hsl(51, 70%, 50%)",
+                  "loc": 118952
+                }
+              ]
+            },
+            {
+              "name": "utils",
+              "color": "hsl(220, 70%, 50%)",
+              "children": [
+                {
+                  "name": "randomize",
+                  "color": "hsl(237, 70%, 50%)",
+                  "loc": 42429
+                },
+                {
+                  "name": "resetClock",
+                  "color": "hsl(210, 70%, 50%)",
+                  "loc": 81439
+                },
+                {
+                  "name": "noop",
+                  "color": "hsl(298, 70%, 50%)",
+                  "loc": 179568
+                },
+                {
+                  "name": "tick",
+                  "color": "hsl(231, 70%, 50%)",
+                  "loc": 47841
+                },
+                {
+                  "name": "forceGC",
+                  "color": "hsl(93, 70%, 50%)",
+                  "loc": 127179
+                },
+                {
+                  "name": "stackTrace",
+                  "color": "hsl(310, 70%, 50%)",
+                  "loc": 149813
+                },
+                {
+                  "name": "dbg",
+                  "color": "hsl(202, 70%, 50%)",
+                  "loc": 85335
+                }
+              ]
+            },
+            {
+              "name": "generators",
+              "color": "hsl(182, 70%, 50%)",
+              "children": [
+                {
+                  "name": "address",
+                  "color": "hsl(330, 70%, 50%)",
+                  "loc": 14831
+                },
+                {
+                  "name": "city",
+                  "color": "hsl(293, 70%, 50%)",
+                  "loc": 35231
+                },
+                {
+                  "name": "animal",
+                  "color": "hsl(358, 70%, 50%)",
+                  "loc": 65707
+                },
+                {
+                  "name": "movie",
+                  "color": "hsl(2, 70%, 50%)",
+                  "loc": 165114
+                },
+                {
+                  "name": "user",
+                  "color": "hsl(234, 70%, 50%)",
+                  "loc": 9718
+                }
+              ]
+            },
+            {
+              "name": "set",
+              "color": "hsl(171, 70%, 50%)",
+              "children": [
+                {
+                  "name": "clone",
+                  "color": "hsl(92, 70%, 50%)",
+                  "loc": 25950
+                },
+                {
+                  "name": "intersect",
+                  "color": "hsl(65, 70%, 50%)",
+                  "loc": 49212
+                },
+                {
+                  "name": "merge",
+                  "color": "hsl(48, 70%, 50%)",
+                  "loc": 37355
+                },
+                {
+                  "name": "reverse",
+                  "color": "hsl(72, 70%, 50%)",
+                  "loc": 178469
+                },
+                {
+                  "name": "toArray",
+                  "color": "hsl(357, 70%, 50%)",
+                  "loc": 183751
+                },
+                {
+                  "name": "toObject",
+                  "color": "hsl(348, 70%, 50%)",
+                  "loc": 119842
+                },
+                {
+                  "name": "fromCSV",
+                  "color": "hsl(76, 70%, 50%)",
+                  "loc": 192322
+                },
+                {
+                  "name": "slice",
+                  "color": "hsl(30, 70%, 50%)",
+                  "loc": 130825
+                },
+                {
+                  "name": "append",
+                  "color": "hsl(278, 70%, 50%)",
+                  "loc": 122038
+                },
+                {
+                  "name": "prepend",
+                  "color": "hsl(112, 70%, 50%)",
+                  "loc": 158293
+                },
+                {
+                  "name": "shuffle",
+                  "color": "hsl(180, 70%, 50%)",
+                  "loc": 181810
+                },
+                {
+                  "name": "pick",
+                  "color": "hsl(255, 70%, 50%)",
+                  "loc": 142391
+                },
+                {
+                  "name": "plouc",
+                  "color": "hsl(333, 70%, 50%)",
+                  "loc": 108308
+                }
+              ]
+            },
+            {
+              "name": "text",
+              "color": "hsl(342, 70%, 50%)",
+              "children": [
+                {
+                  "name": "trim",
+                  "color": "hsl(112, 70%, 50%)",
+                  "loc": 110545
+                },
+                {
+                  "name": "slugify",
+                  "color": "hsl(350, 70%, 50%)",
+                  "loc": 169172
+                },
+                {
+                  "name": "snakeCase",
+                  "color": "hsl(76, 70%, 50%)",
+                  "loc": 67678
+                },
+                {
+                  "name": "camelCase",
+                  "color": "hsl(325, 70%, 50%)",
+                  "loc": 184027
+                },
+                {
+                  "name": "repeat",
+                  "color": "hsl(326, 70%, 50%)",
+                  "loc": 3466
+                },
+                {
+                  "name": "padLeft",
+                  "color": "hsl(179, 70%, 50%)",
+                  "loc": 20788
+                },
+                {
+                  "name": "padRight",
+                  "color": "hsl(336, 70%, 50%)",
+                  "loc": 88992
+                },
+                {
+                  "name": "sanitize",
+                  "color": "hsl(314, 70%, 50%)",
+                  "loc": 31090
+                },
+                {
+                  "name": "ploucify",
+                  "color": "hsl(71, 70%, 50%)",
+                  "loc": 118709
+                }
+              ]
+            },
+            {
+              "name": "misc",
+              "color": "hsl(85, 70%, 50%)",
+              "children": [
+                {
+                  "name": "whatever",
+                  "color": "hsl(134, 70%, 50%)",
+                  "children": [
+                    {
+                      "name": "hey",
+                      "color": "hsl(169, 70%, 50%)",
+                      "loc": 174629
+                    },
+                    {
+                      "name": "WTF",
+                      "color": "hsl(269, 70%, 50%)",
+                      "loc": 62318
+                    },
+                    {
+                      "name": "lol",
+                      "color": "hsl(132, 70%, 50%)",
+                      "loc": 119774
+                    },
+                    {
+                      "name": "IMHO",
+                      "color": "hsl(2, 70%, 50%)",
+                      "loc": 30664
+                    }
+                  ]
+                },
+                {
+                  "name": "other",
+                  "color": "hsl(66, 70%, 50%)",
+                  "loc": 77386
+                },
+                {
+                  "name": "crap",
+                  "color": "hsl(306, 70%, 50%)",
+                  "children": [
+                    {
+                      "name": "crapA",
+                      "color": "hsl(94, 70%, 50%)",
+                      "loc": 76105
+                    },
+                    {
+                      "name": "crapB",
+                      "color": "hsl(207, 70%, 50%)",
+                      "children": [
+                        {
+                          "name": "crapB1",
+                          "color": "hsl(26, 70%, 50%)",
+                          "loc": 151776
+                        },
+                        {
+                          "name": "crapB2",
+                          "color": "hsl(65, 70%, 50%)",
+                          "loc": 28224
+                        },
+                        {
+                          "name": "crapB3",
+                          "color": "hsl(45, 70%, 50%)",
+                          "loc": 64247
+                        },
+                        {
+                          "name": "crapB4",
+                          "color": "hsl(86, 70%, 50%)",
+                          "loc": 84647
+                        }
+                      ]
+                    },
+                    {
+                      "name": "crapC",
+                      "color": "hsl(289, 70%, 50%)",
+                      "children": [
+                        {
+                          "name": "crapC1",
+                          "color": "hsl(316, 70%, 50%)",
+                          "loc": 89237
+                        },
+                        {
+                          "name": "crapC2",
+                          "color": "hsl(230, 70%, 50%)",
+                          "loc": 195099
+                        },
+                        {
+                          "name": "crapC3",
+                          "color": "hsl(139, 70%, 50%)",
+                          "loc": 192408
+                        },
+                        {
+                          "name": "crapC4",
+                          "color": "hsl(283, 70%, 50%)",
+                          "loc": 71665
+                        },
+                        {
+                          "name": "crapC5",
+                          "color": "hsl(162, 70%, 50%)",
+                          "loc": 8558
+                        },
+                        {
+                          "name": "crapC6",
+                          "color": "hsl(121, 70%, 50%)",
+                          "loc": 142023
+                        },
+                        {
+                          "name": "crapC7",
+                          "color": "hsl(271, 70%, 50%)",
+                          "loc": 153957
+                        },
+                        {
+                          "name": "crapC8",
+                          "color": "hsl(37, 70%, 50%)",
+                          "loc": 195978
+                        },
+                        {
+                          "name": "crapC9",
+                          "color": "hsl(298, 70%, 50%)",
+                          "loc": 126028
                         }
                       ]
                     }
@@ -429,14 +432,19 @@ class Contributors extends Component {
                 }
               ]
             }
-          }
+          ]
+        }
+      }
+
 
         return ( 
             <Paper elevation={3} style={this.props.style}>
                 <Typography variant="h5">Contributors</Typography>
-                <div style={{height: 350}}>
+                {this.props.state.contributionData === null && <div style={{width: "40px", marginLeft: "auto", marginRight: "auto", marginTop: 30}}><CircularProgress /></div>}
+                {this.props.state.contributionData === null && <Typography variant="body1" align='center' style={{marginBottom: 20, marginTop: 20}}>Calling all volunteers...</Typography>}
+                {this.props.state.contributionData !== null && <div style={{height: 350}}>
                     <ResponsiveTreeMap
-                        root={root.root}
+                        root={contributionData.root}
                         height={350}
                         identity="name"
                         value="loc"
@@ -444,17 +452,16 @@ class Contributors extends Component {
                         innerPadding={3}
                         outerPadding={3}
                         margin={{ top: 10, right: 10, bottom: 10, left: 10 }}
-                        label="loc"
-                        labelFormat=".0s"
+                        label="name"
                         labelSkipSize={12}
                         labelTextColor={{ from: 'color', modifiers: [ [ 'darker', 1.2 ] ] }}
-                        colors={{ scheme: 'purple_blue_green' }}
+                        colors={{ scheme: 'set2' }}
                         borderColor={{ from: 'color', modifiers: [ [ 'darker', 0.3 ] ] }}
                         animate={true}
                         motionStiffness={90}
                         motionDamping={11}
                     />
-                </div>
+                </div>}
             </Paper>
          );
     }

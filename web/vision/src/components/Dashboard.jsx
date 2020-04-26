@@ -32,6 +32,7 @@ class Dashboard extends Component {
         repoUrl: null,
         begin: null,
         end: null,
+        contributionData: null,
         
         info: {
             name: "repoName",
@@ -104,7 +105,70 @@ class Dashboard extends Component {
     getContributorGraphData = async () => {
         const API_KEY = process.env.REACT_APP_GITHUB_TOKEN;
         let auth = {headers: {authorization: "token " + API_KEY}};
-        // let contributors = await axios.get(repoData.data.contributors_url, auth);
+        let page = 1;
+        let end = new Date();
+        let begin = new Date();
+        begin.setFullYear(end.getFullYear() - 1);
+        let contributors = await axios.get("https://api.github.com/repos/" + this.state.input + "/contributors?per_page=100", auth);
+
+        let tempContributors = contributors.data;
+        let totalContributors;
+
+        while(contributors.headers.link.includes('rel="next"')) {
+            contributors = await axios.get('https://api.github.com/repos/' + this.state.input + '/contributors?' + '&per_page=100&page=' + ++page, auth);
+            totalContributors = tempContributors.concat(contributors.data);
+            tempContributors = totalContributors;
+        }
+
+        let usernames = totalContributors.map((item) => item.login);
+
+        let commits = await axios.get("https://api.github.com/repos/" + this.state.input + "/commits?per_page=100", auth);
+
+        let tempCommits = commits.data;
+        let totalCommits;
+        page = 1;
+
+        while(commits.headers.link.includes('rel="next"')) {
+            commits = await axios.get('https://api.github.com/repos/' + this.state.input + '/commits?' + '&per_page=100&page=' + ++page + '&since=' + begin.toISOString(), auth);
+            totalCommits = tempCommits.concat(commits.data);
+            tempCommits = totalCommits;
+        }
+
+        // console.log(tempCommits);
+
+        // tempCommits.map((item) => console.log(item.author));
+
+        // console.log("here" + usernames)
+        // console.log("tempcommits= " + tempCommits)
+        //tempCommits.map((item) => console.log(item));
+
+        //let x;
+
+
+        let contributionData = usernames.map((name) => 
+            { 
+                // tempCommits.map((item) => console.log(item.author.login));
+                // tempCommits.map((item) => { console.log(item)
+                // })
+                // tempCommits.map((item) => console.log(item));
+                // console.log(name);
+                // console.log(tempCommits.filter((item) => name === item.login));
+                return {
+                "name": name,
+                "loc": tempCommits.filter((item) => name === (item.committer.login)).length
+            }}
+        );
+
+        contributionData = {"root": {
+            "name": "nivo",
+            "color": "hsl(4, 70%, 50%)",
+            "children": [
+                {
+                  "name": "viz",
+                  "color": "hsl(63, 70%, 50%)",
+                  "children":contributionData }]}}
+
+        this.setState({ contributionData })
     }
 
     getData = async () => {
