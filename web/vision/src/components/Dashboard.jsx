@@ -111,34 +111,30 @@ class Dashboard extends Component {
         begin.setFullYear(end.getFullYear() - 1);
         let contributors = await axios.get("https://api.github.com/repos/" + this.state.input + "/contributors?per_page=100", auth);
 
-        let tempContributors = contributors.data;
-        let totalContributors;
+        let totalContributors = contributors.data;
 
         while(contributors.headers.link.includes('rel="next"')) {
             contributors = await axios.get('https://api.github.com/repos/' + this.state.input + '/contributors?&per_page=100&page=' + ++page, auth);
-            totalContributors = tempContributors.concat(contributors.data);
-            tempContributors = totalContributors;
+            totalContributors = totalContributors.concat(contributors.data);
         }
 
         let usernames = totalContributors.map((item) => item.login);
 
         let commits = await axios.get("https://api.github.com/repos/" + this.state.input + "/commits?per_page=100", auth);
 
-        let tempCommits = commits.data;
-        let totalCommits;
+        let totalCommits = commits.data;
         page = 1;
 
         while(commits.headers.link.includes('rel="next"')) {
             commits = await axios.get('https://api.github.com/repos/' + this.state.input + '/commits?&per_page=100&page=' + ++page + '&since=' + begin.toISOString(), auth);
-            totalCommits = tempCommits.concat(commits.data);
-            tempCommits = totalCommits;
+            totalCommits = totalCommits.concat(commits.data);
         }
 
         let contributionData = usernames.map((name) => 
             { 
                 return {
                 "name": name,
-                "loc": tempCommits.filter((item) => name === (item.committer.login)).length
+                "loc": totalCommits.filter((item) => name === (item.committer.login)).length
             }}
         );
 
