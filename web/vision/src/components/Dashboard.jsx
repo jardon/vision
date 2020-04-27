@@ -73,23 +73,20 @@ class Dashboard extends Component {
         date.setFullYear(date.getFullYear() - 1);
         let issues = await axios.get('https://api.github.com/repos/' + this.state.input + '/issues?since=' + date.toISOString() + '&per_page=100', auth);
 
-        let tempIssues = issues.data;
-        let totalIssues;        
+        let totalIssues = issues.data;        
         let page = 1;
 
         while(issues.headers.link.includes('rel="next"')) {
             issues = await axios.get('https://api.github.com/repos/' + this.state.input + '/issues?since=' + date.toISOString() + '&per_page=100&page=' + ++page, auth);
-            totalIssues = tempIssues.concat(issues.data);
-            tempIssues = totalIssues;
+            totalIssues = totalIssues.concat(issues.data);
         }
 
-        tempIssues = [];
-        tempIssues = totalIssues.map((issue) => new Date(issue.updated_at).toISOString().slice(0, 10));
+        totalIssues = totalIssues.map((issue) => new Date(issue.updated_at).toISOString().slice(0, 10));
 
-        tempIssues.map((item) => {
+        totalIssues.map((item) => {
             let count = 0;
             let curr = item;
-            tempIssues.map((date) => {
+            totalIssues.map((date) => {
                 if(date === item) {
                     count++;
                     date = null;
