@@ -71,9 +71,11 @@ class Dashboard extends Component {
         let totalIssues = issues.data;        
         let page = 1;
 
-        while(issues.headers.link.includes('rel="next"')) {
-            issues = await axios.get('https://api.github.com/repos/' + this.state.input + '/issues?since=' + date.toISOString() + '&per_page=100&page=' + ++page, auth);
-            totalIssues = totalIssues.concat(issues.data);
+        if(issues.headers.link !== undefined) {
+            while(issues.headers.link.includes('rel="next"')) {
+                issues = await axios.get('https://api.github.com/repos/' + this.state.input + '/issues?since=' + date.toISOString() + '&per_page=100&page=' + ++page, auth);
+                totalIssues = totalIssues.concat(issues.data);
+            }
         }
 
         totalIssues = totalIssues.map((issue) => new Date(issue.updated_at).toISOString().slice(0, 10));
@@ -105,9 +107,11 @@ class Dashboard extends Component {
 
         let totalContributors = contributors.data;
 
-        while(contributors.headers.link.includes('rel="next"')) {
-            contributors = await axios.get('https://api.github.com/repos/' + this.state.input + '/contributors?&per_page=100&page=' + ++page, auth);
-            totalContributors = totalContributors.concat(contributors.data);
+        if(contributors.headers.link !== undefined) {
+            while(contributors.headers.link.includes('rel="next"')) {
+                contributors = await axios.get('https://api.github.com/repos/' + this.state.input + '/contributors?&per_page=100&page=' + ++page, auth);
+                totalContributors = totalContributors.concat(contributors.data);
+            }
         }
 
         let usernames = totalContributors.map((item) => item.login);
@@ -117,9 +121,11 @@ class Dashboard extends Component {
         let totalCommits = commits.data;
         page = 1;
 
-        while(commits.headers.link.includes('rel="next"')) {
-            commits = await axios.get('https://api.github.com/repos/' + this.state.input + '/commits?&per_page=100&page=' + ++page + '&since=' + begin.toISOString(), auth);
-            totalCommits = totalCommits.concat(commits.data);
+        if(commits.headers.link !== undefined) {
+            while(commits.headers.link.includes('rel="next"')) {
+                commits = await axios.get('https://api.github.com/repos/' + this.state.input + '/commits?&per_page=100&page=' + ++page + '&since=' + begin.toISOString(), auth);
+                totalCommits = totalCommits.concat(commits.data);
+            }
         }
 
         let contributionData = usernames.map((name) => 
