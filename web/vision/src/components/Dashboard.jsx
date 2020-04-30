@@ -146,7 +146,7 @@ class Dashboard extends Component {
 
     getData = async (e) => {
         e.preventDefault();
-        this.setState({ issueData: null, loaded: false, commitData: [], repoUrl: null, begin: null, end: null });
+        this.setState({ issueData: null, loaded: false, commitData: [], repoUrl: null, begin: null, end: null, contributionData: null });
         const API_KEY = process.env.REACT_APP_GITHUB_TOKEN;
         let auth = {headers: {authorization: "token " + API_KEY}}
         let end = new Date();
