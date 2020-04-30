@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
 import RepositoryInfo from './RepositoryInfo';
-import Search from './Search'
+import PrimarySearchAppBar from './Search'
 import axios from 'axios';
-// import Box from '@material-ui/core/Box';
-// import Paper from '@material-ui/core/Paper';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import NoRepository from './NoRepository';
 import Contributors from './Contributors';
 import Commits from './Commits';
@@ -143,7 +138,8 @@ class Dashboard extends Component {
         this.setState({ contributionData })
     }
 
-    getData = async () => {
+    getData = async (e) => {
+        e.preventDefault();
         this.setState({ issueData: null, loaded: false, commitData: [], repoUrl: null, begin: null, end: null });
         const API_KEY = process.env.REACT_APP_GITHUB_TOKEN;
         let auth = {headers: {authorization: "token " + API_KEY}}
@@ -176,14 +172,7 @@ class Dashboard extends Component {
     render() { 
         return ( 
             <React.Fragment>
-                <AppBar position="static">
-                    <Toolbar>
-                        <Typography variant="h6">
-                        Vision
-                        </Typography>
-                        <Search  search={this.getData.bind(this)} updateInput={this.updateInput.bind(this)}/>                      
-                    </Toolbar>
-                </AppBar>
+                <PrimarySearchAppBar input={this.updateInput} submit={this.getData} ></PrimarySearchAppBar>
                 
                 {!this.state.loaded && <NoRepository></NoRepository>}
 
