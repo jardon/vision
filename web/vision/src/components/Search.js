@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
         <AppBar position="static">
           <Toolbar>
             <Typography className={classes.title} variant="h6" noWrap>
-              Vision - Github Activity Analyzer
+              Vision
             </Typography>
             <div className={classes.search}>
             <form onSubmit={props.submit}>
